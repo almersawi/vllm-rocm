@@ -4,6 +4,7 @@ ARG USE_CYTHON="0"
 ARG BUILD_RPD="1"
 ARG COMMON_WORKDIR=/app
 ARG BASE_IMAGE=rocm/vllm-dev:base
+ARG TRANSFORMERS_TOKEN
 
 FROM ${BASE_IMAGE} AS base
 
@@ -128,7 +129,7 @@ ENV HIP_FORCE_DEV_KERNARG=1
 
 RUN python3 -m pip uninstall -y transformers
 
-RUN git clone -b cherry-picked https://almersawi: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@github.com/tiiuae/transformers-internal.git
+RUN git clone -b cherry-picked https://${TRANSFORMERS_TOKEN}@github.com/tiiuae/transformers-internal.git
 
 RUN cd transformers-internal && \
     pip install -e .
